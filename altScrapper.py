@@ -12,17 +12,46 @@ def get_files_path(directory, filenames=None):
     return filenames
 
 
-def is_alt(elem):
-    return elem == 'alt='
-
-
 def split_file_into_words(file):
     f = open(file, 'r')
     file_words = []
     for line in f:
         file_words.append(line.split())
-    print(file_words)
     f.close()
+    return file_words
+
+
+def check_if_alt(word):
+    return word.startswith('alt=')
+
+
+def get_file_alts(list_of_list_words):
+    file_alts = []
+    for li in list_of_list_words:
+        for word in li:
+            if check_if_alt(word):
+                file_alts.append(word)
+            else:
+                pass
+    return file_alts
+
+
+def alt_filter(word):
+    word.replace()
+
+def main(directory):
+    file_paths = get_files_path(directory)
+
+    for file in file_paths:
+        file_words = split_file_into_words(file)
+        if get_file_alts(file_words):
+            print(get_file_alts(file_words))
+            #TODO: filtrer word from alt, add filtered to dict
+
+
+main(directory)
+
+
 
 
 
