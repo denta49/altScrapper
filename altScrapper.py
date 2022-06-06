@@ -37,20 +37,34 @@ def get_file_alts(list_of_list_words):
 
 
 def alt_filter(word):
-    word.replace()
+    return word.replace("alt=", '')
 
-def main(directory):
+
+def get_alts(directory):
     file_paths = get_files_path(directory)
+    alts = []
 
     for file in file_paths:
         file_words = split_file_into_words(file)
+        temporary = file
         if get_file_alts(file_words):
-            print(get_file_alts(file_words))
-            #TODO: filtrer word from alt, add filtered to dict
+            print(file)
+            #TODO: czemu to printuje pojedyncz litery jak dam append?
+            alts.append(get_file_alts(file_words))
+    return alts
 
 
-main(directory)
+def alts_filter(directory):
+    list_of_alts = get_alts(directory)
+    clear_alts = []
+    for ls in list_of_alts:
+        for alt in ls:
+            clear_alts.append(alt_filter(alt))
+    print(clear_alts)
+    return clear_alts
 
+
+alts_filter(directory)
 
 
 
