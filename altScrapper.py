@@ -14,7 +14,7 @@ def get_files_path(directory, filenames=None):
 
 def split_file_into_words(file):
     file_words = []
-    if file.endswith('.yaml') or file.endswith('.php') or file.endswith('.html') or file.endswith('.twig'):
+    if file.endswith('.tsx') or file.endswith('.php') or file.endswith('.html') or file.endswith('.twig'):
         with io.open(file, 'r', encoding='windows-1252') as f:
             for line in f:
                 file_words.append(line.split())
@@ -31,16 +31,19 @@ def check_if_alt(word):
 def get_file_alts(list_of_list_words):
     file_alts = []
     for li in list_of_list_words:
-        for word in li:
-            if check_if_alt(word):
-                file_alts.append(word)
+        if len(li) >= 1:
+            if check_if_alt(li[0]):
+                file_alts.append(li)
             else:
                 pass
+        else:
+            pass
     return file_alts
 
 
-def alt_filter(word):
-    return word.replace("alt=", '').replace("'", "").replace('"', '')
+def alt_filter(list):
+    for word in list:
+        return word.replace("alt=", '').replace("'", "").replace('"', '')
 
 
 def get_alts(directory):
@@ -52,8 +55,10 @@ def get_alts(directory):
         if get_file_alts(file_words):
             arr = []
             for i in get_file_alts(file_words):
+                print(i)
                 arr.append(file)
-                dicti.update({alt_filter(i): f'{arr}'})
+                dicti.update({i: f'{arr}'})
+    print(dicti)
     return dicti
 
 
@@ -67,11 +72,11 @@ def main(directory, json_path, json_name):
     save_json(get_alts(directory), json_path, json_name)
 
 
-directory = '/Users/p.wojenka/projekty/untitled/baltics-ecommerce/templates'
+directory = '/Users/p.wojenka/projekty/service-b2b-de/src'
 json_path = '/Users/p.wojenka/projekty/altScrapper/'
 json_name = 'alts.json'
 
 # add file extensions to read in split_file_into_words
-#TODO: naprawic buga z encoding
+# TODO: naprawic buga z encoding
 
 main(directory, json_path, json_name)
