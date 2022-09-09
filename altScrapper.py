@@ -42,6 +42,7 @@ def get_file_alts(list_of_list_words):
 
 
 def alt_filter(list):
+
     for word in list:
         return word.replace("alt=", '').replace("'", "").replace('"', '')
 
@@ -57,7 +58,8 @@ def get_alts(directory):
             for i in get_file_alts(file_words):
                 print(i)
                 arr.append(file)
-                dicti.update({i: f'{arr}'})
+                string=' '.join(map(str,i))
+                dicti.update({string: f'{arr}'})
     print(dicti)
     return dicti
 
@@ -72,7 +74,7 @@ def main(directory, json_path, json_name):
     save_json(get_alts(directory), json_path, json_name)
 
 
-directory = '/Users/p.wojenka/projekty/service-b2b-de/src'
+directory = '/Users/p.wojenka/projekty/ogrodzenia-przemyslowe/src'
 json_path = '/Users/p.wojenka/projekty/altScrapper/'
 json_name = 'alts.json'
 
